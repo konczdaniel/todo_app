@@ -1,0 +1,32 @@
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewing</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <style>
+
+    </style>
+</head>
+<body>
+    <div class="parent">
+        <div class="child">
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name ="title" value="{{todo.title}}" required>
+                <button type="submit">Save Changes</button>
+                {{message}}
+            </form>
+            <br>
+            <a href="/todo/view/">Go back to view all</a>
+        </div>  
+    </div>
+
+</body>
+<script></script>
+</html>

@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Goodbye</title>
+    <meta http-equiv="refresh" content="3;url=/login/">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+    <div class="parent">
+        <div class="child">
+            <h2>Bye {{user}}!</h2>
+            <p>You will be redirected to the login page shortly...</p>
+        </div>
+    </div>
+</body>
+</html>
