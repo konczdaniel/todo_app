@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from api import views
-
+from django.shortcuts import HttpResponse
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.signUp),
@@ -26,4 +26,5 @@ urlpatterns = [
     path('logout/', views.logout),
     path('todo/view/',views.view),
     path('todo/view/edit/<int:todo_id>/',views.edit, name ='edit_todo'),
+    path('todo/view/delete/<int:todo_id>/',views.delete, name ='delete_todo')
 ]

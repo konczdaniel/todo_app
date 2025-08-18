@@ -20,7 +20,7 @@
                     <button>
                         <a href="{% url 'edit_todo' i.srno %}" name ="edit_button">Edit</a>
                     </button>
-                    <button>Delete</button>
+                    <button><a href="{% url 'delete_todo' i.srno %}">Delete</a></button>
                 </div><br>
                 {% endfor %}
             </div>  

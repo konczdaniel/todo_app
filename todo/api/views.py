@@ -15,6 +15,7 @@ def signUp(request):
         my_user = User.objects.create_user(username,email,password)
         my_user.save()
         return redirect('/login/')
+
     
     return render(request,"api/signup.html")
 
@@ -46,14 +47,12 @@ def todo(request):
     return render(request,'api/todo.html',{"name":request.user})
 
 
-@login_required(login_url='/login/')
 def view(request):
     todo_list = models.Todo_list.objects.filter(user = request.user)
 
     return render(request, 'api/view.html',{"todo_list":todo_list})
 
 
-@login_required(login_url='/login/')
 def edit(request,todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
     if request.method =="POST":
@@ -63,6 +62,11 @@ def edit(request,todo_id):
         
     return render(request,'api/edit.html',{"todo":todo})
 
+def delete(request, todo_id):
+    todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
+    print(todo)
+    todo.delete()
+    return redirect("/todo/view/")
 
 def logout(request):
     if request.method =="POST":
