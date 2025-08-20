@@ -15,19 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,include
+from django.urls import path
 from api import views
 from django.shortcuts import HttpResponse
-from api import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.signUp),
-    path('weather/', include(urls)),
-    path('login/', views.login),
+    path('home/',views.home),
     path('todo/', views.todo),
+    path('weather', views.get_weather),
+    path('login/', views.login),
     path('logout/', views.logout),
     path('todo/view/',views.view),
+    path('todo/favorite/<int:todo_id>/', views.favorite, name='favorite'),
     path('todo/view/edit/<int:todo_id>/',views.edit, name ='edit_todo'),
     path('todo/view/delete/<int:todo_id>/',views.delete, name ='delete_todo')
 ]

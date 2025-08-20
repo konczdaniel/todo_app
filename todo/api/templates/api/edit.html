@@ -16,11 +16,23 @@
 <body>
     <div class="parent">
         <div class="child">
-            <form method="post">
+            <form method="post" action="{% url 'edit_todo' todo.srno %}">
                 {% csrf_token %}
                 <input type="text" name ="title" value="{{todo.title}}" required>
                 <button type="submit">Save Changes</button>
                 {{message}}
+            </form>
+            
+            <form method="post" action="{% url 'favorite' todo.srno %}">
+                {% csrf_token %}
+                <input 
+                    type="checkbox" 
+                    onchange="this.form.submit();" 
+                    id="favorite" 
+                    name="favorite"
+                    {% if todo.favorite %}checked{% endif %}
+                >
+                <label for="favorite">Favorite</label>
             </form>
             <br>
             <a href="/todo/view/">Go back to view all</a>

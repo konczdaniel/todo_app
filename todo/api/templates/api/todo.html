@@ -5,26 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'style.css' %}">
-
 </head>
 <body>
     <div class="parent">
         <div class="child">
-            <form method="post" action="/logout/">
-                {% csrf_token %}
-                <button type="submit">Log out</button>
-            </form>
-            <br>
-            <div>Hi {{name}}!</div><br>
-            <form method="post" action="/todo/">
-                {% csrf_token %}
-               <div>
-                    <input type="text" maxlength="25" placeholder="Title" name ="title" required >
-                    <button type="submit">Add To Do</button>
-                </div><br>
-                <a href="/todo/view/">View</a>
-            </form>       
+            <div class="interior">
+                <form method="post" action="/logout/">
+                    {% csrf_token %}
+                    <button class="logout search" type="submit">Log out</button>
+                </form>
+                <br>
+                <h1>Create New Todo</h1><br>
+                <form method="post" action="/todo/">
+                    {% csrf_token %}
+                   <div class="explorer">
+                        <input class="search" type="text" maxlength="25" placeholder="Title" name ="title" required >
+                        <button class="search" type="submit">Add To Do</button>
+                    </div><br><br>
+                    <div class="explorer">
+                        <a class="search" href="/home">Home Page</a>
+                        <a class="search" href="/todo/view/">View Todos</a>
+                        <a class="search" href="/weather">View Weather</a>
+                    </div>
+                </form>       
+            </div>
 
         </div>
 

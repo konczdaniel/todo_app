@@ -1,12 +1,58 @@
+body {
+    font-family: 'Poppins', sans-serif;
+}
 .parent{
     height:80vh;
-    display:flex;
+    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items:center;
 }
 .child{
-    padding: 200px;
-    border-radius: 20px;
-    border-width:2px;
-    border-style:solid;
+    background: #ffffff;
+    color: #333; 
+    border-radius: 20px; 
+    padding: 30px; 
+    width: 320px; 
+    text-align: center; 
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25); 
+}
+.search{
+    border-radius: 10px;
+    padding:8px; 
+    color:rgb(17, 17, 17);
+    font-size: 13px;
+    border:solid;
+    border-width:1px; 
+    text-decoration: none;
+    border-color:black;
+}
+.search:hover{
+    background-color: rgb(221, 221, 221);
+    cursor:pointer;
+}
+.logout{
+    margin-bottom: 20px;
+}
+.explorer{
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    gap:10px;
+    margin-top:20px;
+}
+.interior{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.create-new-one{
+    margin-bottom:40px;
+}
+.view-todos{
+    margin-bottom:20px;
+}
+.buttons{
+    margin-left:10px;
+    margin-left:10px;
 }

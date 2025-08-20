@@ -5,31 +5,10 @@ from django.contrib.auth import authenticate,login as login_auth,logout as auth_
 from django.contrib.auth.decorators import login_required
 from api.models import Todo_list
 from django.http import JsonResponse
-from todo.settings import api_key as key
+from todo.settings import api_key 
 import requests
 
 # Create your views here.
-def get_weather(request):
-    city = request.GET.get('city')
-    if not city:
-        return JsonResponse({'error': 'City parameter is required'}, status=400)
-
-    api_key = key
-    url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
-
-    response = requests.get(url)
-    if response.status_code != 200:
-        return JsonResponse({'error': 'City not found'}, status=response.status_code)
-
-    data = response.json()
-
-    return JsonResponse({
-        'city': data['name'],
-        'temperature': data['main']['temp'],
-        'description': data['weather'][0]['description'],
-        'humidity': data['main']['humidity'],
-        'wind_speed': data['wind']['speed'],
-    })
 
 
 def user_verifier(username, all_usernames):
@@ -60,15 +39,18 @@ def login(request):
     if request.method =="POST":
         user = request.POST.get('username')
         pwd = request.POST.get('password')
-        print(user,pwd)
         user = authenticate(request,username =user,password = pwd )
         if user is not None:
             login_auth(request,user)
-            return redirect('/todo/')
+            return redirect('/home/')
         else:
-            return redirect('/login/')
+            return render(request,'api/login.html',{'error':'Wrong Username or Password'})
         
     return render(request,'api/login.html')
+
+
+def home(request):
+    return render(request,'api/home.html',{'name':request.user})
 
 
 @login_required(login_url='/login/')
@@ -83,20 +65,23 @@ def todo(request):
     return render(request,'api/todo.html',{"name":request.user})
 
 
+@login_required(login_url='/login/')
 def view(request):
     todo_list = models.Todo_list.objects.filter(user = request.user)
     
     return render(request, 'api/view.html',{"todo_list":todo_list})
 
 
-def edit(request,todo_id):
+@login_required(login_url='/login/')
+def edit(request, todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
-    if request.method =="PUT":
-        todo.title = request.PUT.get('title')
+    message = ''
+    if request.method == "POST":
+        todo.title = request.POST.get('title')
         todo.save()
-        return render(request,'api/edit.html',{"message":"Saved"})
-        
-    return render(request,'api/edit.html',{"todo":todo})
+        message = "Saved"
+
+    return render(request, 'api/edit.html', {"todo": todo, "message": message})
 
 def delete(request, todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
@@ -104,6 +89,20 @@ def delete(request, todo_id):
     todo.delete()
     return redirect("/todo/view/")
 
+
+def favorite(request, todo_id):
+    todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
+
+    if request.method == "POST":
+        is_favorite = 'favorite' in request.POST
+        todo.favorite = is_favorite
+        todo.save()
+        return redirect(f'/todo/view/edit/{todo_id}/', todo_id=todo.srno)
+
+    return render(request, 'api/view.html', {'todo': todo})
+
+
+@login_required(login_url='/login/')
 def logout(request):
     if request.method =="POST":
         user = request.user
@@ -111,3 +110,23 @@ def logout(request):
         return render(request,'api/logout.html',{"user":user})
     
     return redirect('/login/')
+
+
+@login_required(login_url='/login/')
+def get_weather(request):
+    weather_data = None
+    if request.method =="POST":
+        city = request.POST.get('city')
+        url = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+        response = requests.get(url).json()
+
+        if response.get('cod') ==200:
+            weather_data ={
+                'city':city.title(),
+                'temp':response['main']['temp'],
+                'description':response['weather'][0]['description'].title(),
+                'country': response['sys']['country'],
+                'humidity':response['main']['humidity'],
+                'wind_speed':round(response['wind']['speed']*3.6,1),
+            }
+    return render(request,'api/weather.html',{'weather':weather_data})
