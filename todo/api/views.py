@@ -57,8 +57,10 @@ def home(request):
 def todo(request):
     if request.method =="POST":
         title = request.POST.get('title')
+        starting_date = request.POST.get('startDate')
+        expiring_date = request.POST.get('expirityDate')
         if title:
-            obj = models.Todo_list(title=title, user = request.user)
+            obj = models.Todo_list(title=title, user = request.user, start_date = starting_date, expirity_date = expiring_date)
             obj.save()
             return redirect('/todo/view')
         
@@ -73,6 +75,13 @@ def view(request):
 
 
 @login_required(login_url='/login/')
+def view_favorites(request):
+    favorite_list = models.Todo_list.objects.filter(user = request.user, favorite = True)
+    print(favorite_list)
+    return render(request, 'api/favorites.html',{'favorite_list': favorite_list})
+
+
+@login_required(login_url='/login/')
 def edit(request, todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
     message = ''
@@ -83,6 +92,7 @@ def edit(request, todo_id):
 
     return render(request, 'api/edit.html', {"todo": todo, "message": message})
 
+
 def delete(request, todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
     print(todo)
@@ -90,7 +100,7 @@ def delete(request, todo_id):
     return redirect("/todo/view/")
 
 
-def favorite(request, todo_id):
+def add_favorite(request, todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
 
     if request.method == "POST":

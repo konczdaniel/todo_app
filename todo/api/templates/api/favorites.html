@@ -14,11 +14,10 @@
     <div class="parent">
         <div class="child">
             <div class="create-new-one">
-                <a class="search" href="/todo">Create new one</a><br><br>
-                <a class="search" href="/todo/view/favorites/">Go to Favorite List</a>
+                <a class="search" href="/todo/view/">Go Back</a><br><br>
             </div>
             <div>
-                {% for i in todo_list %}
+                {% for i in favorite_list %}
                 <div class="view-todos"> {{i}}
                     <a class="search buttons" a href="{% url 'edit_todo' i.srno %}" name ="edit_button">Edit</a>
                     <a class="search buttons" href="{% url 'delete_todo' i.srno %}">Delete</a>

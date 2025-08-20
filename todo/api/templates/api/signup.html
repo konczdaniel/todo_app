@@ -12,30 +12,28 @@
         <div class="child">
             <form method="post">
                 {% csrf_token %}
-                <div>Sign Up</div>
-                <div>
+                <h1>Sign Up</h1>
+                <div class="login">
                     <b>Username</b><br>
-                    <input type="text" placeholder="Enter your Username" name="username" required>
+                    <input class="search" type="text" placeholder="Enter your Username" name="username" required>
                 </div>
-                <div>
+                <div class="login">
                     <b>Email</b><br>
-                    <input type ="email" placeholder="Enter e-mail" name ="email" required>
+                    <input class="search" type ="email" placeholder="Enter e-mail" name ="email" required>
                 </div>
-                <div>
+                <div class="login">
                     <b>Password</b><br>
-                    <input type="password" placeholder="Enter Password" name="password" required>
+                    <input class="search" type="password" placeholder="Enter Password" name="password" required>
                 </div>
-                <div>
-                    <button type="submit">Sign Up</button>
+                <div class="login">
+                    <button class="search" type="submit">Sign Up</button>
                 </div>
                 <div>{{error_message}}</div><br>
-                <div>
-                    <b>Already have an account?</b>
-                    <br>
-                    <a href="/login">Log in</a>
-                </div>
-        
             </form>
+            <div class="login" style="display: flex; align-items: center; justify-content: center;flex-direction: column;gap: 2px;">
+                <b>Already have an account?</b>
+                <a class="registe-login-switch"  href="/login/">Login</a>
+            </div>
         </div>
     </div>
 

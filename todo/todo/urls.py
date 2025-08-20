@@ -28,7 +28,8 @@ urlpatterns = [
     path('login/', views.login),
     path('logout/', views.logout),
     path('todo/view/',views.view),
-    path('todo/favorite/<int:todo_id>/', views.favorite, name='favorite'),
+    path('todo/favorite/<int:todo_id>/', views.add_favorite, name='favorite'),
     path('todo/view/edit/<int:todo_id>/',views.edit, name ='edit_todo'),
-    path('todo/view/delete/<int:todo_id>/',views.delete, name ='delete_todo')
+    path('todo/view/delete/<int:todo_id>/',views.delete, name ='delete_todo'),
+    path('todo/view/favorites/', views.view_favorites),
 ]

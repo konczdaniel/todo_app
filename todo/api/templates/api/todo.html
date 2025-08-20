@@ -26,12 +26,16 @@
                         <input class="search" type="text" maxlength="25" placeholder="Title" name ="title" required >
                         <button class="search" type="submit">Add To Do</button>
                     </div><br><br>
-                    <div class="explorer">
-                        <a class="search" href="/home">Home Page</a>
-                        <a class="search" href="/todo/view/">View Todos</a>
-                        <a class="search" href="/weather">View Weather</a>
-                    </div>
+                    <label for="startDate">Start Date</label>
+                    <input type="datetime-local" name="startDate" required>
+                    <label for="expirityDate">Expire Date</label>
+                    <input type="datetime-local" name="expirityDate" required>
                 </form>       
+                <div class="explorer">
+                    <a class="search" href="/home">Home Page</a>
+                    <a class="search" href="/todo/view/">View Todos</a>
+                    <a class="search" href="/weather">View Weather</a>
+                </div>
             </div>
 
         </div>
