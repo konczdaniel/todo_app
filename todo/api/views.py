@@ -70,8 +70,21 @@ def todo(request):
 @login_required(login_url='/login/')
 def view(request):
     todo_list = models.Todo_list.objects.filter(user = request.user)
-    
-    return render(request, 'api/view.html',{"todo_list":todo_list})
+    non_expired_todos =[]
+    expired_todos = []
+    for todo in todo_list:
+        if todo.is_expired:
+            expired_todos.append(todo)
+        else:
+            non_expired_todos.append(todo)
+    if request.method =="POST":
+        nameOfTodo = request.POST.get('content-name')
+        print(nameOfTodo)
+        # todo = Todo_list.objects.get(title = nameOfTodo)
+        # todo_id = todo.srno
+        # print (todo_id)
+        
+    return render(request, 'api/view.html',{"non_expired_todos":non_expired_todos,"expired_todos":expired_todos})
 
 
 @login_required(login_url='/login/')

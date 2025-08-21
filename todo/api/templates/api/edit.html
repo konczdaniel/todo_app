@@ -15,7 +15,7 @@
         <div class="child">
             <form method="post" action="{% url 'edit_todo' todo.srno %}">
                 {% csrf_token %}
-                    <input class="search" style="cursor:auto;" type="text" name ="title" value="{{todo.title}}" required>
+                    <input class="search" maxlength="25" style="cursor:auto;" type="text" name ="title" value="{{todo.title}}" required>
                     <button class="search" type="submit">Save Changes</button>
                     <div style="display: flex; justify-content: center; align-items:center; margin-top:10px">
                         {{message}}

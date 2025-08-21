@@ -18,16 +18,46 @@
                 <a class="search" href="/todo/view/favorites/">Go to Favorite List</a>
             </div>
             <div>
-                {% for i in todo_list %}
-                <div class="view-todos"> {{i}}
-                    <a class="search buttons" a href="{% url 'edit_todo' i.srno %}" name ="edit_button">Edit</a>
-                    <a class="search buttons" href="{% url 'delete_todo' i.srno %}">Delete</a>
-                    <button class="buttons" style="border:none; background-color:inherit">
+                {% if non_expired_todos %}
+                <div>Valid Todos</div><br>
+                {% for i in non_expired_todos %}
+                <div class="view-todos">
+                    <form method="post" action="/todo/view/">
+                        {% csrf_token %}
+                        <!-- Send the title or srno here -->
+                        <input type="hidden" name="content-name" value="{{ i }}">
+                        <div>
+                            {{i}}
+                        </div>
+                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px;">
+                            <input style="margin-right:20px; transform:scale(1.5);"
+                            onchange="this.form.submit();" 
+                            type="checkbox">
+                        </form>
 
-                    </button>
+                        <a class="search buttons" style="margin:0" href="{% url 'edit_todo' i.srno %}">Edit</a>
+                        <a class="search buttons" style="margin:0" href="{% url 'delete_todo' i.srno %}">Delete</a>
+                    </div>
                 </div><br>
                 {% endfor %}
-            </div>  
+                {% endif %}
+            </div> 
+            <div>
+                {% if expired_todos %}
+                <div>Expired Todos</div><br>
+                {% for i in expired_todos %}
+                <div class="view-todos"> 
+                    <div>
+                        {{i}}
+                    </div>
+                    <div style="display: flex; flex-direction: row; align-items: center;justify-content: center; gap: 6px;">
+                        <a class="search buttons" style="margin:0" a href="{% url 'edit_todo' i.srno %}" name ="edit_button">Edit</a>
+                        <a class="search buttons" style="margin:0" href="{% url 'delete_todo' i.srno %}">Delete</a>
+                    </div>
+                </div><br>
+                {% endfor %}
+                {% endif %} 
+            </div>
         </div>
     </div>
 
