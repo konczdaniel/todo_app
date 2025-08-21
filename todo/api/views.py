@@ -77,12 +77,15 @@ def view(request):
             expired_todos.append(todo)
         else:
             non_expired_todos.append(todo)
-    if request.method =="POST":
-        nameOfTodo = request.POST.get('content-name')
-        print(nameOfTodo)
-        # todo = Todo_list.objects.get(title = nameOfTodo)
-        # todo_id = todo.srno
-        # print (todo_id)
+    # saving completed either true or false
+    if request.method == "POST":
+        todo_id = request.POST.get("content-name")
+        completed = "completed" in request.POST  # True if checked, False if not
+
+        models.Todo_list.objects.filter(srno=todo_id, user=request.user).update(completed=completed)
+
+        return redirect("/todo/view/")
+
         
     return render(request, 'api/view.html',{"non_expired_todos":non_expired_todos,"expired_todos":expired_todos})
 

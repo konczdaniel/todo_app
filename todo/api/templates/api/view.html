@@ -21,27 +21,28 @@
                 {% if non_expired_todos %}
                 <div>Valid Todos</div><br>
                 {% for i in non_expired_todos %}
-                <div class="view-todos">
-                    <form method="post" action="/todo/view/">
-                        {% csrf_token %}
-                        <!-- Send the title or srno here -->
-                        <input type="hidden" name="content-name" value="{{ i }}">
-                        <div>
-                            {{i}}
-                        </div>
-                        <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px;">
-                            <input style="margin-right:20px; transform:scale(1.5);"
-                            onchange="this.form.submit();" 
-                            type="checkbox">
-                        </form>
+                <form class="view-todos" method="post" action="/todo/view/">
+                    {% csrf_token %}
+                    <input type="hidden" name="content-name" value="{{ i.srno }}">
+
+                    <div>{{ i }}</div>
+                    <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 6px;">
+                        <input 
+                            style="margin-right:20px; transform:scale(1.5);"
+                            type="checkbox"
+                            name="completed"
+                            value="true"
+                            {% if i.completed %}checked{% endif %}
+                            onchange="this.form.submit();">
 
                         <a class="search buttons" style="margin:0" href="{% url 'edit_todo' i.srno %}">Edit</a>
                         <a class="search buttons" style="margin:0" href="{% url 'delete_todo' i.srno %}">Delete</a>
                     </div>
-                </div><br>
+                </form>
+                <br>
                 {% endfor %}
                 {% endif %}
-            </div> 
+            </div>
             <div>
                 {% if expired_todos %}
                 <div>Expired Todos</div><br>

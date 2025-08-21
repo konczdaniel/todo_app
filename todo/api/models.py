@@ -10,7 +10,8 @@ class Todo_list(models.Model):
     start_date =models.DateTimeField()
     expirity_date = models.DateTimeField()
     user= models.ForeignKey(User,on_delete=models.CASCADE)
-    
+    completed = models.BooleanField(default=False)
+
     def __str__(self):
         return self.title
     
