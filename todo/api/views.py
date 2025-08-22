@@ -93,20 +93,25 @@ def view(request):
 @login_required(login_url='/login/')
 def view_favorites(request):
     favorite_list = models.Todo_list.objects.filter(user = request.user, favorite = True)
-    print(favorite_list)
     return render(request, 'api/favorites.html',{'favorite_list': favorite_list})
+
+
+def view_completed(request):
+    completed_list = models.Todo_list.objects.filter(user = request.user, completed = True)
+    return render(request, 'api/completed.html',{'completed_list':completed_list})
 
 
 @login_required(login_url='/login/')
 def edit(request, todo_id):
     todo = get_object_or_404(Todo_list, srno=todo_id, user=request.user)
     message = ''
+    print(todo.start_date)
     if request.method == "POST":
         todo.title = request.POST.get('title')
         todo.save()
         message = "Saved"
 
-    return render(request, 'api/edit.html', {"todo": todo, "message": message})
+    return render(request, 'api/edit.html', {"todo": todo,"start":todo.start_date, "message": message})
 
 
 def delete(request, todo_id):

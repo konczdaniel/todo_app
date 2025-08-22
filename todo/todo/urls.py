@@ -32,4 +32,5 @@ urlpatterns = [
     path('todo/view/edit/<int:todo_id>/',views.edit, name ='edit_todo'),
     path('todo/view/delete/<int:todo_id>/',views.delete, name ='delete_todo'),
     path('todo/view/favorites/', views.view_favorites),
+    path('todo/view/completed-todos/', views.view_completed),
 ]

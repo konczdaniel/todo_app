@@ -15,8 +15,18 @@
         <div class="child">
             <form method="post" action="{% url 'edit_todo' todo.srno %}">
                 {% csrf_token %}
+                <div>
                     <input class="search" maxlength="25" style="cursor:auto;" type="text" name ="title" value="{{todo.title}}" required>
                     <button class="search" type="submit">Save Changes</button>
+                </div><br>
+                <div>
+                    <label for="start date">Start date</label>
+                    <input type="datetime-local" name="start-date" value="{{ todo.start_date|date:'Y-m-d\\TH:i' }}">
+                </div>
+                <div> 
+                    <label for="end-date">End Date</label>
+                    <input type="datetime-local" name="end-date" value="{{ todo.expirity_date|date:'Y-m-d\\TH:i' }}">
+                </div>
                     <div style="display: flex; justify-content: center; align-items:center; margin-top:10px">
                         {{message}}
                     </div>
