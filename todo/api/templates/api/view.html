@@ -14,9 +14,13 @@
     <div class="parent">
         <div class="child">
             <div class="create-new-one">
-                <a class="search" href="/todo">Create new one</a><br><br>
-                <a class="search" href="/todo/view/favorites/">Go to Favorite List</a>
-                <a class="search" href="/todo/view/completed-todos/">See completed Todos</a>
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <a style="margin-bottom:4px;" class="search" href="/todo">Create new one</a><br><br>
+                </div>
+                <div class="favorite-completed">
+                    <a class="search" href="/todo/view/favorites/">Go to Favorite List</a>
+                    <a class="search" href="/todo/view/completed-todos/">Completed Todos</a>
+                </div>
             </div>
             <div>
                 {% if non_expired_todos %}

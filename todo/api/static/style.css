@@ -50,6 +50,12 @@ body {
 .create-new-one{
     margin-bottom:40px;
 }
+.favorite-completed{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap:10px;
+}
 
 .buttons{
     margin-left:10px;

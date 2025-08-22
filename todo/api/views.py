@@ -85,7 +85,6 @@ def view(request):
         models.Todo_list.objects.filter(srno=todo_id, user=request.user).update(completed=completed)
 
         return redirect("/todo/view/")
-
         
     return render(request, 'api/view.html',{"non_expired_todos":non_expired_todos,"expired_todos":expired_todos})
 
@@ -108,10 +107,12 @@ def edit(request, todo_id):
     print(todo.start_date)
     if request.method == "POST":
         todo.title = request.POST.get('title')
+        todo.start_date = request.POST.get('start-date')
+        todo.expirity_date = request.POST.get('end-date')
         todo.save()
         message = "Saved"
 
-    return render(request, 'api/edit.html', {"todo": todo,"start":todo.start_date, "message": message})
+    return render(request, 'api/edit.html', {"todo": todo, "message": message})
 
 
 def delete(request, todo_id):
